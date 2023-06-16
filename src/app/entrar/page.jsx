@@ -1,4 +1,5 @@
 "use client"
+
 /*
   This example requires some changes to your config:
   
@@ -19,9 +20,23 @@ export default function Entrar() {
 
   async function login(e){
     e.preventDefault()
+    fetch(process.env.API_URL + "/token", {
+      method: "POST",
+      cache: 'no-store',
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      mode: "no-cors",
+      body: JSON.stringify({
+        Email: "user7@email.com",
+        Password: "User@123"
+      })
+    }).then(res => res.json()).then(response => console.log(response))
+    /*
     fetch("/api/login", {
       method: "POST"
-    }).then(r => console.log(r))
+    }).then(r => r.json()).then(response => console.log(response)) */
     
   
   }
