@@ -1,5 +1,5 @@
 "use client"
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import Link from 'next/link';
 import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react'
 import {
@@ -12,6 +12,8 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
+import { AuthContext } from './../../app/context/AuthContext';
+import { useContext } from 'react';
 
 const products = [
   { name: 'Todos os planos', description: 'Planos para você economizar e ficar na régua', href: '#', icon: ChartPieIcon },
@@ -30,8 +32,14 @@ function classNames(...classes) {
 }
 
 export default function NavBar() {
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  
+  const {isAuthenticated, logout} = useContext(AuthContext)
+
+  useEffect(()=> {
+    console.log(isAuthenticated)
+  })
+
   return (
     <header className="bg-white">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
@@ -78,10 +86,10 @@ export default function NavBar() {
                         <item.icon className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
                       </div>
                       <div className="flex-auto">
-                        <a href={item.href} className="block font-semibold text-gray-900">
+                        <Link href={item.href} className="block font-semibold text-gray-900">
                           {item.name}
                           <span className="absolute inset-0" />
-                        </a>
+                        </Link>
                         <p className="mt-1 text-gray-600">{item.description}</p>
                       </div>
                     </div>
@@ -89,49 +97,58 @@ export default function NavBar() {
                 </div>
                 <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
                   {callsToAction.map((item) => (
-                    <a
+                    <Link
                       key={item.name}
                       href={item.href}
                       className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100"
                     >
                       <item.icon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
                       {item.name}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </Popover.Panel>
             </Transition>
           </Popover>
 
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          <Link href="#" className="text-sm font-semibold leading-6 text-gray-900">
             Serviços
-          </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          </Link>
+          <Link href="#" className="text-sm font-semibold leading-6 text-gray-900">
             Sobre Nós
-          </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          </Link>
+          <Link href="#" className="text-sm font-semibold leading-6 text-gray-900">
             Contato
-          </a>
+          </Link>
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <Link href="/entrar" className="text-sm font-semibold leading-6 text-gray-900">
-              Entrar
+          {!isAuthenticated ? (
+            <Link href="/entrar" className="text-sm font-semibold leading-6 text-gray-900">
+              <span>Entrar</span>
               <span aria-hidden="true">&rarr;</span>
-          </Link>
+            </Link>
+          ):(
+            <Link onClick={()=> logout()} href="#" className="text-sm font-semibold leading-6 text-gray-900">
+              <span>Sair</span>
+              <span aria-hidden="true">&rarr;</span>
+            </Link>
+          )}
+
+          
         </div>
       </nav>
       <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
         <div className="fixed inset-0 z-10" />
         <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-md sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
-            <a href="#" className="-m-1.5 p-1.5">
+            <Link href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Arte do Disfarce</span>
               <img
                 className="h-8 w-auto"
                 src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                 alt=""
               />
-            </a>
+            </Link>
             <button
               type="button"
               className="-m-2.5 rounded-md p-2.5 text-gray-700"
@@ -169,32 +186,32 @@ export default function NavBar() {
                     </>
                   )}
                 </Disclosure>
-                <a
+                <Link
                   href="#"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Serviços
-                </a>
-                <a
+                </Link>
+                <Link
                   href="#"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Sobre Nós
-                </a>
-                <a
+                </Link>
+                <Link
                   href="#"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Contato
-                </a>
+                </Link>
               </div>
               <div className="py-6">
-                <a
-                  href="#"
+                <Link
+                  href="/entrar"
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Entrar
-                </a>
+                </Link>
               </div>
             </div>
           </div>

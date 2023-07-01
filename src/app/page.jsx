@@ -2,11 +2,13 @@
 import Image from "next/image"
 import useDeviceSize from './../components/custom-hooks/windowResize'
 import Link from 'next/link'
+import NavBar  from './../components/navbar'
 
 export default function Home() {
   var [width, height] = useDeviceSize()
   return (
-    <> 
+    <>
+      <NavBar/>
       <div style={{height: '450px', overflow: 'hidden', width: '100%'}}>
         <Image width={width} height={height} alt="Panel" src={"/images/barba_home_panel.jpg"} className="lg:mb-2 lg:-mt-24"/>
       </div>

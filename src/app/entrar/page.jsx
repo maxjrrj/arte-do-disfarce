@@ -1,4 +1,7 @@
 "use client"
+import { useContext, useState } from "react"
+import { AuthContext } from './../context/AuthContext';
+
 
 /*
   This example requires some changes to your config:
@@ -15,31 +18,28 @@
   ```
 */
 
-
 export default function Entrar() {
 
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const {signIn} = useContext(AuthContext)
+
+
   async function login(e){
+
     e.preventDefault()
-    fetch(process.env.API_URL + "/token", {
-      method: "POST",
-      cache: 'no-store',
-      headers: {
-        "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      mode: "no-cors",
-      body: JSON.stringify({
-        Email: "user7@email.com",
-        Password: "User@123"
-      })
-    }).then(res => res.json()).then(response => console.log(response))
-    /*
-    fetch("/api/login", {
-      method: "POST"
-    }).then(r => r.json()).then(response => console.log(response)) */
+    const res = await signIn({email, password})
+
+    if(res.code == '200'){
+
+      console.log('usuario autenticado')
+
+    }else {
+      console.log('usuario nao autenticado')
+    }
     
-  
   }
+  
     return (
       <>
         {/*
@@ -74,8 +74,8 @@ export default function Entrar() {
                     name="email"
                     type="email"
                     autoComplete="email"
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    onChange={e => setEmail(e.target.value)}
+                    className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
@@ -97,8 +97,8 @@ export default function Entrar() {
                     name="password"
                     type="password"
                     autoComplete="current-password"
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    onChange={e => setPassword(e.target.value)}
+                    className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
