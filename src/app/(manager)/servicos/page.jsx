@@ -1,5 +1,5 @@
 "use client"
-import Api from "@/services/Api";
+import Api from "../../../services/Api";
 import { useEffect, useState } from "react";
 import { PencilIcon, TrashIcon, SquaresPlusIcon} from "@heroicons/react/24/outline";
 import UpdateServiceModal from '../../../components/services/updateServiceModal/index';

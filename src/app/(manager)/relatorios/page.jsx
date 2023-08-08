@@ -1,8 +1,7 @@
 "use client"
 import { useEffect, useState } from 'react';
-import { parseCookies } from 'nookies';
 import EmployeeSelect from './../../../components/employee/select/index';
-import Api from '@/services/Api';
+import Api from '../../../services/Api';
 
 
 export default function Relatorios(){

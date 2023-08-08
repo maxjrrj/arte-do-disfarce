@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from "react"
-import Api from "@/services/Api";
+import Api from "../../../services/Api";
 
 const EmployeeSelect = (props) => {
 

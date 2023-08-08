@@ -1,6 +1,6 @@
 "use client"
 
-import Api from "@/services/Api";
+import Api from "../../../services/Api";
 import { useEffect, useState } from "react";
 
 const AddServiceModal = (props) => {
