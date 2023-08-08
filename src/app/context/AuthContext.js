@@ -3,7 +3,7 @@ import {createContext, useEffect, useState} from 'react';
 import { useRouter, usePathname } from 'next/navigation'
 import { setCookie, parseCookies, destroyCookie  } from "nookies"
 import getNonPrivateRoutes from './../../components/PrivateRoute/getNonPrivateRoutes';
-import Api from '../../services/Api';
+import Api from '@/services/Api';
 
 export const AuthContext = createContext({})
 
