@@ -1,5 +1,4 @@
 import './globals.css'
-import AuthProvider from './context/AuthContext';
 
 export const metadata = {
   title: 'Arte do Disfarce',
@@ -9,13 +8,9 @@ export const metadata = {
 export default function RootLayout({children}) {
 
   return (
-    <html lang="pt">
-      <body /*className={inter.className}*/>
-        <AuthProvider>
-          {children}
-        </AuthProvider>
-      </body>
-    </html>     
-        
+    <>
+      {children}
+    </>
+    
   )
 }

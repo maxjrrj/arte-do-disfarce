@@ -1,5 +1,28 @@
-import axios from 'axios';
+import { parseCookies } from "nookies";
 
-const  api = axios.create({baseURL: 'https://127.0.0.1:7033'})
+const Api = async (path, options = {method: "GET", body: null}) => {
+    
+    const {"nextauth.token": token} = parseCookies()
+    
+    try{
+        const response = await fetch("https://investidev.com" + path, {
+            method: options.method,
+            body: options.body,
+            headers: {
+                "mode": "cors",
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token,
+                //"Acecpt": "application/json",
+            }
+        })
+        
+        const data = await response.json()
+        return data
+        
+    }catch(e){
+        console.log(e)
+        throw e
+    }
+}
 
-export default api
+export default Api;

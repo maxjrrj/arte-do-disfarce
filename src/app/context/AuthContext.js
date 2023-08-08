@@ -3,71 +3,112 @@ import {createContext, useEffect, useState} from 'react';
 import { useRouter, usePathname } from 'next/navigation'
 import { setCookie, parseCookies, destroyCookie  } from "nookies"
 import getNonPrivateRoutes from './../../components/PrivateRoute/getNonPrivateRoutes';
-//import { Inter } from 'next/font/google'
+import Api from '@/services/Api';
 
 export const AuthContext = createContext({})
 
 export const AuthProvider = ({children}) => {
 
-    //const inter = Inter({ subsets: ['latin'] })
-
     const {push} = useRouter()
-    const [user, setUser] = useState(null)
-
+    const [user, setUser] = useState()
+    const [token, setToken] = useState()
     const path = usePathname()
-
-    const nonPrivateRoutes = getNonPrivateRoutes()
-    const privateRoute = nonPrivateRoutes.includes(path) ? false : true
-
+    const privateRoute = getNonPrivateRoutes().includes(path) ? false : true
     const [isAuthenticated, setAuthenticated] = useState(!!user)
+
+
+    useEffect(()=> {
+
+        const {'nextauth.token': token} =  parseCookies()
+        
+        function parseJwt (token) {
+            return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
+        }
+
+        if(token){
+
+            let jwt = parseJwt(token)
+            
+            try{
+                Api("/users/" + jwt.userId)
+                .then(res => {
+
+                    if(!res){
+                        push("/entrar")
+                    } else {
+                        setAuthenticated(true)
+                        setUser({name: res.name, email: res.email})
+                    }
+                  })
+            
+            }catch(e){
+                console.log(e)
+            }
+
+        } else if(!token){
+            push('/entrar')
+        }
+
+    }, [isAuthenticated, push, path])
        
 
     async function signIn({email, password}){
-
-        const response = await fetch("/api/login", {method:'POST', headers: {"Content-Type": "application/json"},  body: JSON.stringify({email,password}) })
-        const res = await response.json()
         
-        setCookie(undefined, 'nextauth.token', res.token, {
-            maxAge: 60*60*1 // 1 hour
-        })
+        try{
+            const response = await fetch("https://investidev.com/token", {
+            //const response = await fetch("https://investidev.com/token", {
+              mode: 'cors',
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                Email: email,
+                Password: password
+              })
+            })
+        
+            const {token} = await response.json()
+            setCookie(undefined, 'nextauth.token', token, {
+                maxAge: 60*60*1 // 1 hour
+            })
 
-        push("/")
-        setAuthenticated(true)
-        return res
+            push("/")
+            setAuthenticated(true)
+            return {code:"200"}
+        
+        }catch(e){
+            console.log(e)
+        }
 
     }
 
-    async function logout(){
+    async function signOut(){
         destroyCookie({}, 'nextauth.token')
         setAuthenticated(false)
     } 
 
-    useEffect(()=> {
 
-        const {'nextauth.token': token} = parseCookies()
 
-        if(token){
-            setAuthenticated(true)
-            //LOGICA PARA RECUPERAR DADOS DO USUÁRIO
-            setUser({
-                user: {
-                    name: "Max Jr",
-                    email: "maxadsjr@gmail.com"
-                }
-            })
-        } else {
-            console.log("dentro do if " + token)
-            push("/entrar")
-        }
+    if(!privateRoute){
+        return (
+            
+                <AuthContext.Provider value={{isAuthenticated, signIn, signOut, user}}>
+                    {children}
+                </AuthContext.Provider>
+            
+        )
+    } else if(privateRoute && isAuthenticated == true){
+        return(
+            <>
+                <AuthContext.Provider value={{isAuthenticated, signIn, signOut, user}}>
+                    {children}
+                </AuthContext.Provider>
+            </>
+        )
+    }
 
-    }, [isAuthenticated, push])
-
-    return (
-        <>
-            {!privateRoute &&  <AuthContext.Provider value={{isAuthenticated, signIn, logout}}>{children}</AuthContext.Provider>}
-            {(privateRoute && isAuthenticated == true) && <AuthContext.Provider value={{isAuthenticated, signIn, logout}}>{children}</AuthContext.Provider>}
-        </>
-    )
+    
 }
 
 export default AuthProvider;

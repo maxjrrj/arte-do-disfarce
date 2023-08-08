@@ -1,5 +1,5 @@
 const getNonPrivateRoutes = () => {
-    return [ "/entrar"]
+    return [ "/entrar", "/registro"]
 }
 
 export default getNonPrivateRoutes;

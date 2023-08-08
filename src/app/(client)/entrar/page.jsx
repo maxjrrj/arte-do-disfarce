@@ -1,6 +1,6 @@
 "use client"
 import { useContext, useState } from "react"
-import { AuthContext } from './../context/AuthContext';
+import { AuthContext, AuthProvider } from '../../context/AuthContext';
 
 
 /*
@@ -24,24 +24,16 @@ export default function Entrar() {
   const [password, setPassword] = useState("")
   const {signIn} = useContext(AuthContext)
 
-
   async function login(e){
 
     e.preventDefault()
     const res = await signIn({email, password})
 
-    if(res.code == '200'){
-
-      console.log('usuario autenticado')
-
-    }else {
-      console.log('usuario nao autenticado')
-    }
-    
   }
   
     return (
       <>
+          
         {/*
           This example requires updating your template:
   
@@ -125,4 +117,3 @@ export default function Entrar() {
       </>
     )
   }
-  

@@ -34,19 +34,20 @@ function classNames(...classes) {
 export default function NavBar() {
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const {isAuthenticated, logout} = useContext(AuthContext)
+  const [authenticated, setAuthenticated] = useState(false)
+  const {isAuthenticated, signOut} = useContext(AuthContext)
 
   useEffect(()=> {
-    console.log(isAuthenticated)
-  })
+    setAuthenticated(isAuthenticated)
+  }, [isAuthenticated])
 
   return (
-    <header className="bg-white">
+    <div className="bg-white">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
-          <Link href="#" className="-m-1.5 p-1.5">
+          <Link href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
-            <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
+            <img  className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
           </Link>
         </div>
         <div className="flex lg:hidden">
@@ -117,23 +118,23 @@ export default function NavBar() {
           <Link href="#" className="text-sm font-semibold leading-6 text-gray-900">
             Sobre Nós
           </Link>
-          <Link href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          <Link href="/contato" className="text-sm font-semibold leading-6 text-gray-900">
             Contato
           </Link>
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          {!isAuthenticated ? (
+          
+          {!authenticated ? (
             <Link href="/entrar" className="text-sm font-semibold leading-6 text-gray-900">
               <span>Entrar</span>
               <span aria-hidden="true">&rarr;</span>
             </Link>
           ):(
-            <Link onClick={()=> logout()} href="#" className="text-sm font-semibold leading-6 text-gray-900">
+            <Link onClick={()=> signOut()} href="#" className="text-sm font-semibold leading-6 text-gray-900">
               <span>Sair</span>
               <span aria-hidden="true">&rarr;</span>
             </Link>
           )}
-
           
         </div>
       </nav>
@@ -217,6 +218,6 @@ export default function NavBar() {
           </div>
         </Dialog.Panel>
       </Dialog>
-    </header>
+    </div>
   )
 }
