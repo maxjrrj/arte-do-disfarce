@@ -56,11 +56,13 @@ export const AuthProvider = ({children}) => {
         
         try{
             const response = await fetch("https://investidev.com/token", {
-            //const response = await fetch("https://investidev.com/token", {
-              mode: 'cors',
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
+                method: "POST",
+                mode: 'no-cors',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin":"*",
+                    "Access-Control-Allow-Methods":"*",
+                    "Access-Control-Allow-Headers":"*"
               },
               body: JSON.stringify({
                 Email: email,
