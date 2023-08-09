@@ -11,7 +11,7 @@ const Api = async (path, options = {method: "GET", body: null}) => {
             headers: {
                 "mode": "cors",
                 "Content-Type": "application/json",
-                "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXI0QGdtYWlsLmNvbSIsIm5hbWVpZCI6IkZlbGlwZSBTbWl0aCIsInVzZXJJZCI6Ijg1YjZjZTFhLWU4MjktNDUzMi1hZmE1LWEwNDExMWNmNWYwMSIsInJvbGUiOiJFbXBsb3llZSIsIm5iZiI6MTY5MTUzODQ4MCwiZXhwIjoxNjkxNTQ1NjgwLCJpYXQiOjE2OTE1Mzg0ODAsImlzcyI6Ik15QXBwSXNzdWVyIiwiYXVkIjoiQXVkaWVuY2UifQ.ZWbpX4O5pHK5fQztqUsgwMvLCIhoPkirGHigNmIk46U" //+ token,
+                "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXI1QGdtYWlsLmNvbSIsIm5hbWVpZCI6IkZlbGlwZSBTbWl0aCIsInVzZXJJZCI6ImNlNjdjYWRkLTlmYjMtNGQ2Ni05NjYwLTAxYzExZTM0ZjJjOSIsInJvbGUiOiJNYW5hZ2VyIiwibmJmIjoxNjkxNTg2NjU2LCJleHAiOjE2OTE1OTM4NTYsImlhdCI6MTY5MTU4NjY1NiwiaXNzIjoiTXlBcHBJc3N1ZXIiLCJhdWQiOiJBdWRpZW5jZSJ9.-7PHQwFnhR7mw-4ZdGdmlTPGytO2l86LaRAd-S79jmQ" 
                 //"Acecpt": "application/json",
             }
         })

@@ -7,9 +7,7 @@ const EmployeeSelect = (props) => {
     const [employees, setEmployees] = useState([{name:"",id:"0000-0000-0000-0000"}])
 
     useEffect(()=>{
-        Api("/employees?page=0&rows=10", {
-            method: "GET"
-        }).then(data => setEmployees(data))
+        Api("/employees?page=0&rows=10").then(data => setEmployees(data))
     },[])
 
     return (  
