@@ -6,34 +6,35 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '@/app/context/AuthContext'
 
-const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
-]
 
-const navigation = [
-  { name: 'Caixa', href: '/caixa', current: false },
-  { name: 'Relatórios', href: '/relatorios', current: false },
-  { name: 'Usuários', href: '/usuarios', current: false },
-  { name: 'Serviços', href: '/servicos', current: false },
-  { name: 'Planos', href: '/planos', current: false },
-]
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
 
 export default function Dashboard({children}) {
+  const userNavigation = [
+    { name: 'Your Profile', href: '#' },
+    { name: 'Settings', href: '#' },
+    { name: 'Sign out', href: '#' },
+  ]
+  
+  const navigation = [
+    { name: 'Caixa', href: '/admin/caixa', current: false },
+    { name: 'Relatórios', href: '/admin/relatorios', current: false },
+    { name: 'Aprovações', href: '/admin/aprovacoes', current: false },
+    { name: 'Serviços', href: '/admin/servicos', current: false },
+    //{ name: 'Planos', href: '/admin/planos', current: false },
+  ]
+  
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
+  }
 
   const context = useContext(AuthContext)
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState()
   const path = usePathname()
 
   useEffect(()=>{
     setUser({
-      name: user.name,
-      email: user.email,
+      name: user?.name,
+      email: user?.email,
       imageUrl:
         'https://avatars.githubusercontent.com/u/63122403?v=4',
     })
@@ -43,14 +44,7 @@ export default function Dashboard({children}) {
     
   return (
       <div className="min-h-full">
-        {/*
-          This example requires updating your template:
-
-          ```
-          <html class="h-full bg-gray-100">
-          <body class="h-full">
-          ```
-        */}
+        
         <Disclosure as="nav" className="bg-gray-800">
           {({ open }) => (
             <>
@@ -72,15 +66,9 @@ export default function Dashboard({children}) {
                             href={item.href}
                             className={classNames(
                                 item.href != path
-                                ? 'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
-                                : 'bg-gray-900 text-white'
+                                ? 'text-gray-300 hover:font-bold hover:text-white rounded-md px-3 py-2 text-sm font-medium'
+                                : 'font-bold text-white'
                               )}
-                            /*className={classNames(
-                              item.current
-                                ? 'bg-gray-900 text-white'
-                                : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                              'rounded-md px-3 py-2 text-sm font-medium'
-                            )}*/
 
                             aria-current={item.current ? 'page' : undefined}
                           >

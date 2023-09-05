@@ -17,7 +17,7 @@ const UpdateServiceModal = (props) => {
     }
 
     useEffect(()=>{
-        Api("/services/" + props.id).then(service => {
+        Api("/services/" + props.id).then(res => res?.json()).then(service => {
 
             setServiceName(service.name)
             setServicePrice(service.price)

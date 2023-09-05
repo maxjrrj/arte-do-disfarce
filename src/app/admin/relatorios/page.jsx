@@ -26,9 +26,18 @@ export default function Relatorios(){
 
         try
         {
-            Api(`/transactions?initial_date=${dataInicial ? dataInicial : primeiroDia} 00:00:01&final_date=${dataFinal ? dataFinal : ultimoDia} 23:59:00&type=${type}${employee == "" ? "": "&provider=" + employee }`, {
+            Api(`/transactions?initial_date=${dataInicial ? dataInicial : primeiroDia} 00:00:00&final_date=${dataFinal ? dataFinal : ultimoDia} 23:59:59&type=${type}${employee == "" ? "": "&provider=" + employee }`, {
                 method: "GET"})
-                .then(data => setTransactions(data))
+                .then(res => res.json()).then(data => {
+                    
+                    console.log(data)
+                    if(data.status == 200){
+                        setTransactions(data.transactions)
+                    } else if(data.status == 403) {
+                        window.alert("Não autorizado")
+                    }
+                })
+                
         } 
         catch(e)
         {
@@ -121,13 +130,13 @@ export default function Relatorios(){
                             </div>
                         </div>
 
-                        <div className='w-2/12'>
+                        <div className='lg:w-2/12'>
                             <EmployeeSelect setEmployee={setEmployee} />
                         </div>
                         
 
 
-                        <div className="lg:w-1/3 sm:w-full sm:mt-3 flex lg:justify-around">
+                        <div className="lg:w-1/3 sm:w-full sm:mt-3 flex justify-around">
 
                             <div className="lg:w-7/12 sm:w-6/12 flex">
 
@@ -148,15 +157,15 @@ export default function Relatorios(){
                     
                 </div>
 
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <table className="w-full">
+                <div className="mx-auto lg:max-w-7xl sm:max-w-full sm:px-6 lg:px-8 ">
+                    <table className="w-full ">
                         <thead className="">
                             <tr className="bg-gray-300 rounded-lg">
-                                <th className="p-3 w-2/12">Descrição</th>
+                                <th className="p-3 w-2/12">Data</th>
                                 <th className="p-3 w-2/12">Colaborador</th>
                                 <th className="p-3 w-2/12">Serviços</th>
-                                <th className="p-3 w-2/12">Tipo</th>
                                 <th className="p-3 w-2/12">Valor</th>
+                                <th className="p-3 w-2/12 sm:hidden">Tipo</th>
                             </tr>
                         
                         </thead>
@@ -164,24 +173,24 @@ export default function Relatorios(){
                             {transactions.map(transaction => {
                                 return(
                                     <tr key={transaction.id}>
-                                        <td className="p-3 text-center">{transaction.description}</td>
+                                        <td className="p-3 w-2/12 text-center">{new Date(transaction.transactionDate).toLocaleDateString("pt-br")}</td>
                                         <td className="p-3 text-center">{transaction.provider.name}</td>
                                         <td className="p-3 text-center">
 
-                                            <select className="bg-gray-100 appearance-none w-8/12 text-center focus:outline-none">
-                                                     {transaction.service[0] != undefined ?
-                                                        <option selected disabled className="cursor-pointer focus:border-none"> Exibir</option> : 
-                                                        <option selected disabled> --------</option>} 
+                                            <select defaultValue={'DEFAULT'} className="bg-gray-100 appearance-none w-8/12 text-center focus:outline-none">
+                                                     {transaction.service[0] == undefined ?
+                                                        <option selected  value="DEFAULT" className="cursor-pointer focus:border-none"> Exibir</option> : 
+                                                        <option  selected  readonly value="DEFAULT"> --------</option>} 
                                                     {transaction.service.map(service => {
                                                         if (service.name.length < 1) return false
-                                                        return <option key={service.id} className="rounded-none h-full text-center" disabled>{service.name}</option>
+                                                        return <option key={service.id} value="" className="rounded-none h-full text-center" disabled>{service.name}</option>
                                                     })}
                                                 
                                             </select>
                                            
                                         </td>
                                         <td className="p-3 text-center">R$ {transaction.type == 'cashInflow' ? parseFloat(transaction.value).toFixed(2,0) : parseFloat(transaction.value).toFixed(2,0) * -1}</td>
-                                        <td className="p-3 text-center">{transaction.type == "cashInflow" ? <b className="text-green-500">Entrada</b> : <b className="text-red-500">Saída</b>}</td>
+                                        <td className="p-3 text-center sm:hidden">{transaction.type == "cashInflow" ? <b className="text-green-500">Entrada</b> : <b className="text-red-500">Saída</b>}</td>
                                     </tr>
                                 )
                                     

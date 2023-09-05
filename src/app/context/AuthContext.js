@@ -2,7 +2,7 @@
 import {createContext, useEffect, useState} from 'react';
 import { useRouter, usePathname } from 'next/navigation'
 import { setCookie, parseCookies, destroyCookie  } from "nookies"
-import getNonPrivateRoutes from './../../components/PrivateRoute/getNonPrivateRoutes';
+import getNonPrivateRoutes, {isAllowedRoute} from './../../components/PrivateRoute/getNonPrivateRoutes';
 import Api from '../../services/Api';
 
 export const AuthContext = createContext({})
@@ -10,43 +10,40 @@ export const AuthContext = createContext({})
 export const AuthProvider = ({children}) => {
 
     const {push} = useRouter()
-    const [user, setUser] = useState()
-    const [token, setToken] = useState()
     const path = usePathname()
-    const privateRoute = getNonPrivateRoutes().includes(path) ? false : true
-    const [isAuthenticated, setAuthenticated] = useState(!!user)
+    var privateRoute = getNonPrivateRoutes().includes(path) ? false : true
+    var {'nextauth.token': token} =  parseCookies()
+    var user = {name: "", email: "", role: "" }
+    const [isAuthenticated, setAuthenticated] = useState(!!token)
 
 
     useEffect(()=> {
-
-        const {'nextauth.token': token} =  parseCookies()
         
-        function parseJwt (token) {
-            return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
-        }
-
-        if(token){
+        const parseJwt = (token) => JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
+        
+        if(!getNonPrivateRoutes().includes(path) && token != undefined){
 
             let jwt = parseJwt(token)
-            
             try{
-                Api("/users/" + jwt.userId)
-                .then(res => {
-
+                Api("/users/" + jwt.userId).then(res => {
                     if(!res){
                         push("/entrar")
                     } else {
+                        user = {name: res.name, email: res.email, role: res.roleId}
                         setAuthenticated(true)
-                        setUser({name: res.name, email: res.email})
                     }
-                  })
-            
+                })
             }catch(e){
-                console.log(e)
-            }
-
-        } else if(!token){
-            push('/entrar')
+                console.log("Sessão expirada")
+                push("/")
+            }    
+        }else if (!getNonPrivateRoutes().includes(path) && token == undefined){
+            console.log("Usuário não autenticado")
+            push("/")
+        } else if(getNonPrivateRoutes().includes(path)) {
+            
+        } else {
+            push("/")
         }
 
     }, [isAuthenticated, push, path])
@@ -55,14 +52,11 @@ export const AuthProvider = ({children}) => {
     async function signIn({email, password}){
         
         try{
-            const response = await fetch("https://investidev.com/token", {
+            const response = await fetch("https://localhost:7033/token", {
                 method: "POST",
-                mode: 'no-cors',
+                mode: 'cors',
                 headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin":"*",
-                    "Access-Control-Allow-Methods":"*",
-                    "Access-Control-Allow-Headers":"*"
+                    "Content-Type": "application/json"
               },
               body: JSON.stringify({
                 Email: email,
@@ -71,6 +65,7 @@ export const AuthProvider = ({children}) => {
             })
         
             const {token} = await response.json()
+            destroyCookie({}, 'nextauth.token')
             setCookie(undefined, 'nextauth.token', token, {
                 maxAge: 60*60*1 // 1 hour
             })
@@ -87,10 +82,8 @@ export const AuthProvider = ({children}) => {
 
     async function signOut(){
         destroyCookie({}, 'nextauth.token')
-        setAuthenticated(false)
+        setAuthenticated(false);
     } 
-
-
 
     if(!privateRoute){
         return (

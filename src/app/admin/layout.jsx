@@ -11,8 +11,9 @@ export default function AdmLayout({children}) {
 
   return (
 
-    <html className="h-full bg-gray-100">
-      <body className="h-full">
+    <html>
+      <head></head>
+      <body className="h-full bg-gray-100">
         <AuthProvider>
           <Dashboard>
             {children}

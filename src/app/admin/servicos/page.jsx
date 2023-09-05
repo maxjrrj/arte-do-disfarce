@@ -16,7 +16,7 @@ const Servicos = () => {
 
      
     const refreshModal= () => {
-        Api("/services").then(res => setServices(res))
+        Api("/services").then(res => res.json()).then(data =>  setServices(data))
     }
 
     const editService = (id) => {
