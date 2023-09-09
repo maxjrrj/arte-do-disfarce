@@ -15,9 +15,11 @@ export default function AdmLayout({children}) {
       <head></head>
       <body className="h-full bg-gray-100">
         <AuthProvider>
-          <Dashboard>
-            {children}
-          </Dashboard>
+          <main>
+            <Dashboard>
+              {children}
+            </Dashboard>
+          </main>
         </AuthProvider>
       </body>
     </html>           

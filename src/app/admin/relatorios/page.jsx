@@ -178,14 +178,14 @@ export default function Relatorios(){
                                         <td className="p-3 text-center">
 
                                             <select defaultValue={'DEFAULT'} className="bg-gray-100 appearance-none w-8/12 text-center focus:outline-none">
-                                                     {transaction.service[0] == undefined ?
-                                                        <option selected  value="DEFAULT" className="cursor-pointer focus:border-none"> Exibir</option> : 
-                                                        <option  selected  readonly value="DEFAULT"> --------</option>} 
-                                                    {transaction.service.map(service => {
-                                                        if (service.name.length < 1) return false
-                                                        return <option key={service.id} value="" className="rounded-none h-full text-center" disabled>{service.name}</option>
-                                                    })}
-                                                
+                                                {transaction.service[0] == undefined ?
+                                                    <option  selected  readonly value="DEFAULT"> --------</option> :
+                                                    <option selected  value="DEFAULT" className="cursor-pointer focus:border-none"> Exibir</option>
+                                                } 
+                                                {transaction.service.map(service => {
+                                                    if (service.name.length < 1) return false
+                                                    return <option key={service.id} value="" className="rounded-none h-full text-center" disabled>{service.name}</option>
+                                                })}
                                             </select>
                                            
                                         </td>

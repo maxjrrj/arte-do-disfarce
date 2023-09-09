@@ -5,11 +5,12 @@ const getNonPrivateRoutes = () => {
 export const isAllowedRoute = (path, role) => {
 
     var routes = { publicRoutes: ["/", "/registro", "/entrar"]}
-    routes["003"] = ["/planos", ...routes.publicRoutes]
-    routes["002"] = ["/admin/caixa", "/admin/servicos", ...routes["003"]]
-    routes["001"] = ["/admin/relatorios", "/admin/usuarios", ...routes["002"]]
-    
-    return role == "000" ? true : routes[role].includes(path)
+    routes["Client"] = ["/planos", ...routes.publicRoutes]
+    routes["Employee"] = ["/admin/caixa", "/admin/servicos", ...routes["Client"]]
+    routes["Manager"] = ["/admin/relatorios", "/admin/usuarios", "/admin/aprovacoes", ...routes["Employee"]]
+    console.log(routes)
+    console.log(role)
+    return role == "Admin" ? true : routes[role].includes(path)
 }
 
 

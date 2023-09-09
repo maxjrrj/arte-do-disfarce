@@ -34,7 +34,7 @@ const UpdateServiceModal = (props) => {
         
         <div style={{backgroundColor: "#00000085"}} className="h-full w-full  top-0 left-0 absolute ml-auto flex flex-col justify-center items-center">
 
-            <div className="bg-gray-800 lg:w-2/3 lg:h-12 rounded-t-lg border-2 border-black border-b-0 text-white text-center">
+            <div className="bg-gray-800 lg:w-2/3 lg:h-12 rounded-t-lg border-2 border-black border-b-0 text-white font-bold text-center sm:h-1/12 sm:w-10/12 sm:p-2">
                 Editar Serviço
             </div>
 
@@ -94,9 +94,9 @@ const UpdateServiceModal = (props) => {
                     </div>  
                 </div>
                 
-                <div className="lg:w-full sm:w-6/12 flex justify-end">
-                    <button className="bg-green-200 w-1/6 h-12 mr-3 rounded-lg lg:hover:bg-green-500 lg:hover:text-white active:text-gray mt-auto" onClick={() => updateService()}><b>Salvar</b></button>
-                    <button className="bg-gray-500 w-1/6 h-12 mr-3 rounded-lg lg:hover:bg-gray-800 lg:hover:text-white active:text-gray mt-auto" onClick={() => props.close()}><b>Fechar</b></button>
+                <div className="lg:w-full sm:w-full sm:mt-3 flex justify-end">
+                    <button className="lg:bg-green-200 lg:w-1/6 lg:h-12 sm:w-1/2 sm:h-12 mr-3 rounded-lg sm:bg-green-500 sm:text-white lg:hover:bg-green-500 lg:hover:text-white active:text-gray mt-auto" onClick={() => updateService()}><b>Salvar</b></button>
+                    <button className="lg:bg-gray-500 lg:w-1/6 lg:h-12 sm:w-1/2 sm:h-12 mr-3 rounded-lg sm:bg-gray-800 sm:text-white lg:hover:bg-gray-800 lg:hover:text-white active:text-gray mt-auto" onClick={() => props.close()}><b>Fechar</b></button>
                 </div>
             </div>
         </div>

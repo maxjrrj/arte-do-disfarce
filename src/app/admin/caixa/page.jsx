@@ -2,9 +2,8 @@
 import MultiServicesSelect from '../../../components/services/index';
 import { useState, useEffect } from 'react';
 import EmployeeSelect from '@/components/employee/select';
+import Modal from '@/components/modal/index.jsx';
 import Api from './../../../services/Api';
-
-
 
 export default function Caixa(){
     
@@ -16,6 +15,7 @@ export default function Caixa(){
     const [cliente, setCliente] = useState()
     const [services, setServices] = useState([])
     const [employee, setEmployee] = useState("")
+    const [modal, setModal] = useState("")
 
 
     useEffect(()=> {
@@ -65,10 +65,9 @@ export default function Caixa(){
             
             console.log(res)
             if(res.status ==  200){
-                window.alert("criado")
+                setModal(<Modal closeModal={setModal} header={"Registro"} body={"O registro foi efetuado com sucesso!"} />)
             } else {
-                window.alert("erro ao criar produto")
-
+                setModal(<Modal closeModal={setModal} header={"Registro"} body={"Erro ao registrar transação!"} />)
             }
 
             //document.querySelectorAll("input").forEach(i => i.value = "")
@@ -80,6 +79,7 @@ export default function Caixa(){
     }
     return(
         <div>
+            
             <header className="bg-white shadow">
                 <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                     <h1 className="text-3xl font-bold tracking-tight text-gray-900">Caixa</h1>
@@ -211,6 +211,8 @@ export default function Caixa(){
 
                    
                 </form>
+
+                {modal}
                 </div>
             </main>
         </div>
