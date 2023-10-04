@@ -1,14 +1,20 @@
 "use client"
 import { useEffect, useState } from "react"
+import { useSession } from 'next-auth/react';
 import Api from "../../../services/Api";
 
 const EmployeeSelect = (props) => {
 
-    const [employees, setEmployees] = useState([{name:"",id:"0000-0000-0000-0000"}])
+    const [employees, setEmployees] = useState([{name:"roberson",id:"0000-0000-0000-0000"}])
+    const session = useSession()
+    console.log(session)
 
     useEffect(()=>{
-        Api("/employees?page=0&rows=10").then(res => res.json()).then(data => setEmployees(data))
+        Api("/employees?page=0&rows=10",{token: session.data.token.token})
+            .then(res => res.json())
+            .then(data => setEmployees(data))
     },[])
+    
 
     return (  
         <> 
@@ -24,4 +30,4 @@ const EmployeeSelect = (props) => {
     )
 }
 
-export default EmployeeSelect
+export default EmployeeSelect;

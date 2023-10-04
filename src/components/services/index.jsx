@@ -3,20 +3,27 @@ import { useState, useEffect } from "react";
 import Api from '../../services/Api';
 import React from 'react'
 import Select from 'react-select'
+import { useSession } from 'next-auth/react';
 
 export default function MultiServicesSelect(props) {
 
+
+  const session = useSession()
+  const token = session?.data?.token?.token
+  
   const [options, setOptions] = useState([
     { value: '1', label: 'Teste' }
   ])
 
   useEffect(()=>{
-    Api("/services",{}).then(res => res.json()).then(data => {
-      let tempOptions = []
-      data.forEach(service => tempOptions.push({value: service.id, label: service.name, price: service.price}));
-      setOptions(tempOptions)
+    Api("/services",{token: token}).then(res => res.json())
+      .then(data =>{
+        console.log(data)
+        let tempOptions = []
+        data.forEach(service => tempOptions.push({value: service.id, label: service.name, price: service.price}));
+        setOptions(tempOptions)
     })
-  }, [])
+  }, [session])
 
   return (
 

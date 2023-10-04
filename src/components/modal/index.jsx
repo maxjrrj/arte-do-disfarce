@@ -38,9 +38,9 @@ const Modal = ({ closeModal, header, body }) => {
                 >
                   <path
                     stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
                   />
                 </svg>
@@ -49,12 +49,12 @@ const Modal = ({ closeModal, header, body }) => {
             </div>
             {/*} Modal body */}
             <div className="p-6 space-y-6">
-              <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+              <p className=" leading-relaxed text-gray-200 dark:text-gray-200 text-xl">
                 {body}
               </p>
             </div>
             {/*} Modal footer */}
-            <div className="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+            <div className="flex items-center justify-end p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
               <button
                 data-modal-hide="defaultModal"
                 type="button"

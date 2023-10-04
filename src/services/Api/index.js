@@ -1,7 +1,6 @@
-import { parseCookies } from "nookies";
+'use client'
 
-const Api = async (path, options = { method: "GET", body: null }) => {
-  const { "nextauth.token": token } = parseCookies();
+const Api = async (path, options = { method: "GET", body: null, token: undefined }) => {  
 
   try {
     const response = await fetch("https://localhost:7033" + path, {
@@ -10,10 +9,10 @@ const Api = async (path, options = { method: "GET", body: null }) => {
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
+        Authorization: "Bearer " + options.token,
       },
     });
-
+    
     return response;
   } catch (e) {
     console.log(e);

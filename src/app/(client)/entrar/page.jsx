@@ -1,47 +1,45 @@
 "use client"
-import { useContext, useState } from "react"
-import { AuthContext, AuthProvider } from '../../context/AuthContext';
-
-
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
+import { useState } from "react"
+import { useSession, signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import Modal from './../../../components/modal/index'
 
 export default function Entrar() {
-
+  const session = useSession()
+  const router = useRouter()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const {signIn} = useContext(AuthContext)
+  const [modal, setModal] = useState("")
+  
+  const showSession = () => {
+    console.log(session)
+  }
 
+  
   async function login(e){
-
+    
     e.preventDefault()
-    const res = await signIn({email, password})
+    try {
+      const data = await signIn('credentials', {
+        email: email,
+        password: password,
+        redirect: false
+      })
+      if(data.error){
+        setModal(<Modal closeModal={setModal} header={"Erro"} body={"Login ou senha incorretos."} />)
+      } else {
+        router.push('/')
+      }
 
+    } catch(error){
+      console.log(error)
+    }
+    
+  
   }
   
     return (
       <>
-          
-        {/*
-          This example requires updating your template:
-  
-          ```
-          <html class="h-full bg-white">
-          <body class="h-full">
-          ```
-        */}
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img
@@ -53,6 +51,7 @@ export default function Entrar() {
               Acesse sua conta
             </h2>
           </div>
+          <button onClick={() => showSession()}>showSession</button>
   
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
             <form className="space-y-6" method="POST">
@@ -98,7 +97,7 @@ export default function Entrar() {
               <div>
                 <button
                   type="submit"
-                  onClick={login}
+                  onClick={e => login(e)}
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Entrar
@@ -114,6 +113,7 @@ export default function Entrar() {
             </p>
           </div>
         </div>
+        {modal}
       </>
     )
   }

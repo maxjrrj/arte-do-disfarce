@@ -4,12 +4,15 @@ import { useState, useEffect } from 'react';
 import EmployeeSelect from '@/components/employee/select';
 import Modal from '@/components/modal/index.jsx';
 import Api from './../../../services/Api';
+import { useSession } from 'next-auth/react';
 
 export default function Caixa(){
     
+    const session = useSession()
+    const [day, month, year] = new Date().toLocaleDateString('pt-br').split('/')
 
     const [valor, setValor] = useState()
-    const [data, setData] = useState(new Date().toISOString().split("T")[0])
+    const [data, setData] = useState(year + '-' + month + '-' + day)
     const [categoria, setCategoria] = useState("service")
     const [descricao, setDescricao] = useState()
     const [cliente, setCliente] = useState()
@@ -17,10 +20,9 @@ export default function Caixa(){
     const [employee, setEmployee] = useState("")
     const [modal, setModal] = useState("")
 
-
+    
     useEffect(()=> {
         let count = 0
-        console.log(typeof(services))
         if(services != undefined){
             services.map(service => {
                 count += service.price
@@ -35,19 +37,7 @@ export default function Caixa(){
         event.preventDefault()
         let servicos = services.map(s => s.value)
         var tzoffset = (new Date()).getTimezoneOffset() * 60000;
-        //
-        console.log({ 
-            createdBy: "Max",
-            transactionDate: data,
-            value: valor,
-            type: type,
-            category: categoria,
-            description: descricao,
-            client: cliente,
-            provider: employee,
-            services: servicos})
 
-            //
         Api("/transactions", {
             body: JSON.stringify({ 
                 createdBy: "Max",
@@ -59,7 +49,8 @@ export default function Caixa(){
                 client: cliente,
                 provider: employee,
                 services: servicos}),
-            method: "POST"
+            method: "POST",
+            token: session.data.token.token
 
         }).then(res => {
             
@@ -70,8 +61,6 @@ export default function Caixa(){
                 setModal(<Modal closeModal={setModal} header={"Registro"} body={"Erro ao registrar transação!"} />)
             }
 
-            //document.querySelectorAll("input").forEach(i => i.value = "")
-            //document.getElementById("employees").value = ""
             } 
         )
         

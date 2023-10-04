@@ -1,4 +1,5 @@
 import './globals.css'
+import Provider from './providers/sessionProvider'
 
 export const metadata = {
   title: 'Arte do Disfarce',
@@ -8,9 +9,13 @@ export const metadata = {
 export default function RootLayout({children}) {
 
   return (
-    <>
-      {children}
-    </>
+    <html lang="pt">
+      <Provider>
+        <body>
+          {children}
+        </body>
+      </Provider>
+    </html>
     
   )
 }

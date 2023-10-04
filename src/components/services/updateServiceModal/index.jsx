@@ -1,23 +1,25 @@
 "use client"
-
+import {useSession} from 'next-auth/react'
 import Api from "../../../services/Api";
 import { useEffect, useState } from "react";
 
 const UpdateServiceModal = (props) => {
+    const session = useSession()
+    const token = session.data.token.token
 
     const [serviceName, setServiceName] = useState()
     const [servicePrice, setServicePrice] = useState()
     const [serviceDuration, setServiceDuration] = useState()
 
     const updateService = () => {
-        Api("/services/" + props.id, {method: "PUT", body: JSON.stringify({name: serviceName, price: servicePrice, duration: serviceDuration }) }).then(service => {
+        Api("/services/" + props.id, {method: "PUT", body: JSON.stringify({name: serviceName, price: servicePrice, duration: serviceDuration }), token }).then(service => {
             console.log(service)
             props.close()
         })  
     }
 
     useEffect(()=>{
-        Api("/services/" + props.id).then(res => res?.json()).then(service => {
+        Api("/services/" + props.id, {token}).then(res => res?.json()).then(service => {
 
             setServiceName(service.name)
             setServicePrice(service.price)

@@ -2,18 +2,21 @@
 import { useEffect, useState } from 'react';
 import Api from '../../../services/Api';
 import {CheckCircleIcon, XCircleIcon} from "@heroicons/react/24/solid"
+import { useSession } from 'next-auth/react';
 
 
 export default function Relatorios(){
 
     const [transactions, setTransactions] = useState([])
+    const session = useSession()
+    const token = session.data.token.token
 
     const aproveTransaction = ({id, status}) => {
         let transaction = transactions.find(transaction => transaction.id == id)
         transaction.status = status
         transaction.provider = transaction.provider.id
-        //console.log(transaction)
-        Api("/transactions/" + id, {method: "PUT", body: JSON.stringify(transaction)}).then(res => res?.json()).then(response => {
+        console.log(token)
+        Api("/transactions/" + id, {method: "PUT", body: JSON.stringify(transaction), token: token}).then(res => res?.json()).then(response => {
             console.log(response)
             if(response.status == 200){
                 let newTransactions = transactions.filter(t => t.id != id)
@@ -26,7 +29,7 @@ export default function Relatorios(){
     useEffect(()=> {
         try {
             Api(`/transactions?initial_date=2023-08-08 23:59:00&final_date=2023-08-08 23:59:00&type=both&status=pending`, {
-                method: "GET"})
+                method: "GET", token})
                 .then(res => res.json()).then(data => {
                     console.log(data)
                     if(data.status == 200){
@@ -73,8 +76,8 @@ export default function Relatorios(){
 
                                             <select defaultValue={'DEFAULT'} className="bg-gray-100 appearance-none w-8/12 text-center focus:outline-none">
                                                      {transaction.service[0] == undefined ?
-                                                        <option selected  value="DEFAULT" className="cursor-pointer focus:border-none"> Exibir</option> : 
-                                                        <option  selected  readonly value="DEFAULT"> --------</option>} 
+                                                        <option value="DEFAULT" className="cursor-pointer focus:border-none"> Exibir</option> : 
+                                                        <option readOnly value="DEFAULT"> --------</option>} 
                                                     {transaction.service.map(service => {
                                                         if (service.name.length < 1) return false
                                                         return <option key={service.id} value="" className="rounded-none h-full text-center" disabled>{service.name}</option>

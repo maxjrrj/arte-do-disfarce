@@ -12,8 +12,7 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
-import { AuthContext } from './../../app/context/AuthContext';
-import { useContext } from 'react';
+import { useSession, signOut } from 'next-auth/react';
 
 const products = [
   { name: 'Todos os planos', description: 'Planos para você economizar e ficar na régua', href: '#', icon: ChartPieIcon },
@@ -32,14 +31,19 @@ function classNames(...classes) {
 }
 
 export default function NavBar() {
-
+  const session = useSession()
+  
+  
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [authenticated, setAuthenticated] = useState(false)
-  const {isAuthenticated, signOut} = useContext(AuthContext)
-
-  useEffect(()=> {
-    setAuthenticated(isAuthenticated)
-  }, [isAuthenticated])
+  const [authenticated, setAuthenticated] = useState(session.status)
+  useEffect(() => {
+    setAuthenticated(session.status)
+  }, [session.status])
+  const logout = (e) => {
+    e.preventDefault()
+    signOut()
+  }
+ 
 
   return (
     <div className="bg-white">
@@ -124,13 +128,13 @@ export default function NavBar() {
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           
-          {!authenticated ? (
+          {authenticated == "unauthenticated" ? (
             <Link href="/entrar" className="text-sm font-semibold leading-6 text-gray-900">
               <span>Entrar</span>
               <span aria-hidden="true">&rarr;</span>
             </Link>
           ):(
-            <Link onClick={()=> signOut()} href="#" className="text-sm font-semibold leading-6 text-gray-900">
+            <Link onClick={(e)=> logout(e)} href="#" className="text-sm font-semibold leading-6 text-gray-900">
               <span>Sair</span>
               <span aria-hidden="true">&rarr;</span>
             </Link>

@@ -1,6 +1,6 @@
+'use client'
 import './../globals.css'
 import NavBar from './../../components/navbar/index';
-import AuthProvider from './../context/AuthContext';
 
 export const metadata = {
   title: 'Arte do Disfarce',
@@ -10,14 +10,9 @@ export const metadata = {
 export default function ClientLayout({children}) {
 
   return (
-
-    <html lang="pt">
-      <body>
-        <AuthProvider>
-          <NavBar></NavBar>
-          {children}
-        </AuthProvider>
-      </body>
-    </html>           
+      <>
+        <NavBar></NavBar>
+        {children}
+      </>    
   )
-}
+  }

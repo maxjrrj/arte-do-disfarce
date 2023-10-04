@@ -2,10 +2,10 @@
 import { useEffect, useState } from 'react';
 import EmployeeSelect from './../../../components/employee/select/index';
 import Api from '../../../services/Api';
-
+import { useSession } from 'next-auth/react';
 
 export default function Relatorios(){
-
+    const session = useSession()
     const [dataInicial, setDataInicial] = useState()
     const [dataFinal, setDataFinal] = useState()
     const [transactions, setTransactions] = useState([])
@@ -17,6 +17,7 @@ export default function Relatorios(){
     function findTransactions(){
 
         const type = handleType()
+        
 
         if(!dataInicial || !dataFinal){
             var date = new Date()
@@ -27,7 +28,7 @@ export default function Relatorios(){
         try
         {
             Api(`/transactions?initial_date=${dataInicial ? dataInicial : primeiroDia} 00:00:00&final_date=${dataFinal ? dataFinal : ultimoDia} 23:59:59&type=${type}${employee == "" ? "": "&provider=" + employee }`, {
-                method: "GET"})
+                method: "GET", token: session.data.token.token})
                 .then(res => res.json()).then(data => {
                     
                     console.log(data)
@@ -69,7 +70,7 @@ export default function Relatorios(){
             setSaida(!saida)
         }
     }
-
+    
     useEffect(()=> {
         let count = 0
         transactions.forEach(t => {
@@ -78,7 +79,9 @@ export default function Relatorios(){
         console.log(count)
         setTotal(count)
     }, [transactions, entrada, saida])
+
     
+
 
     return(
         <div>
@@ -88,7 +91,7 @@ export default function Relatorios(){
                     <h1 className="text-3xl font-bold tracking-tight text-gray-900">R$ {total.toFixed(2)}</h1>
                 </div>
             </header>
-            <main>
+            {/*<main>*/}
                 <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
                     
                     <div className="w-full flex justify-between sm:flex-col lg:flex-row ">
@@ -179,8 +182,8 @@ export default function Relatorios(){
 
                                             <select defaultValue={'DEFAULT'} className="bg-gray-100 appearance-none w-8/12 text-center focus:outline-none">
                                                 {transaction.service[0] == undefined ?
-                                                    <option  selected  readonly value="DEFAULT"> --------</option> :
-                                                    <option selected  value="DEFAULT" className="cursor-pointer focus:border-none"> Exibir</option>
+                                                    <option readOnly value="DEFAULT"> --------</option> :
+                                                    <option value="DEFAULT" className="cursor-pointer focus:border-none"> Exibir</option>
                                                 } 
                                                 {transaction.service.map(service => {
                                                     if (service.name.length < 1) return false
@@ -199,7 +202,7 @@ export default function Relatorios(){
                         </tbody>
                     </table>
                 </div>
-            </main>
+            {/*</main>*/}
         </div>
     )
 }

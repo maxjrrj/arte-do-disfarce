@@ -4,11 +4,14 @@ import { useEffect, useState } from "react";
 import { PencilIcon, TrashIcon, SquaresPlusIcon} from "@heroicons/react/24/outline";
 import UpdateServiceModal from '../../../components/services/updateServiceModal/index';
 import AddServiceModal from '../../../components/services/addServiceModal/index';
+import { useSession } from "next-auth/react";
 
 const Servicos = () => {
 
     const [services, setServices] = useState([{id: "", name: "", duration: 0, price: 0}])
     const [modal, setModal] = useState("")
+    const session = useSession()
+    const token = session.data.token.token
 
     const closeModal = () => {
         setModal(null)
@@ -16,7 +19,7 @@ const Servicos = () => {
 
      
     const refreshModal= () => {
-        Api("/services").then(res => res.json()).then(data =>  setServices(data))
+        Api("/services", {token: token}).then(res => res.json()).then(data =>  setServices(data))
     }
 
     const editService = (id) => {

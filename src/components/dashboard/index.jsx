@@ -3,18 +3,20 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState, useContext } from 'react';
-import { AuthContext } from '@/app/context/AuthContext'
-
-
+import { useEffect, useState } from 'react';
+import { useSession, signOut } from 'next-auth/react'
 
 export default function Dashboard({children}) {
+
+  const logout = () => {
+    signOut()
+  }
+
   const userNavigation = [
-    { name: 'Your Profile', href: '#' },
-    { name: 'Settings', href: '#' },
-    { name: 'Sign out', href: '#' },
+    { name: 'Meu Peril', href: '#'},
+    { name: 'Configurações', href: '#' }
   ]
-  
+
   const navigation = [
     { name: 'Caixa', href: '/admin/caixa', current: false },
     { name: 'Relatórios', href: '/admin/relatorios', current: false },
@@ -27,20 +29,19 @@ export default function Dashboard({children}) {
     return classes.filter(Boolean).join(' ')
   }
 
-  const context = useContext(AuthContext)
   const [user, setUser] = useState()
   const path = usePathname()
+  const session = useSession()
 
   useEffect(()=>{
+    
     setUser({
-      name: user?.name,
-      email: user?.email,
+      name: session.data.token.user.nameid,
+      email: 'user@gmail.com',
       imageUrl:
         'https://avatars.githubusercontent.com/u/63122403?v=4',
     })
-  },[context.usuario])
-  
-    
+  },[session])
     
   return (
       <div className="min-h-full">
@@ -121,6 +122,7 @@ export default function Dashboard({children}) {
                                 )}
                               </Menu.Item>
                             ))}
+                            <button className='block px-4 py-2 text-sm text-gray-700 w-full text-left hover:bg-gray-100' onClick={() => logout()}>Sair</button>
                           </Menu.Items>
                         </Transition>
                       </Menu>
@@ -156,6 +158,7 @@ export default function Dashboard({children}) {
                       {item.name}
                     </Disclosure.Button>
                   ))}
+                  hello
                 </div>
                 <div className="border-t border-gray-700 pb-3 pt-4">
                   <div className="flex items-center px-5">
@@ -175,22 +178,27 @@ export default function Dashboard({children}) {
                     </button>
                   </div>
                   <div className="mt-3 space-y-1 px-2">
+                    
                     {userNavigation.map((item) => (
                       <Disclosure.Button
                         key={item.name}
-                        as="a"
+                        as="button"
                         href={item.href}
                         className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                       >
                         {item.name}
                       </Disclosure.Button>
+                      
                     ))}
+                    <button className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+                            onClick={() => logout()}>Sair</button>
                   </div>
                 </div>
               </Disclosure.Panel>
             </>
           )}
         </Disclosure>
+        
         {children}
       </div>
   )
