@@ -37,6 +37,7 @@ export default function Caixa(){
         event.preventDefault()
         let servicos = services.map(s => s.value)
         var tzoffset = (new Date()).getTimezoneOffset() * 60000;
+        console.log(session.data.token.token)
 
         Api("/transactions", {
             body: JSON.stringify({ 

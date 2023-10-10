@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 const AddServiceModal = (props) => {
     const session = useSession()
     const token = session.data.token.token
-    
     const [serviceName, setServiceName] = useState()
     const [servicePrice, setServicePrice] = useState()
     const [serviceDuration, setServiceDuration] = useState()

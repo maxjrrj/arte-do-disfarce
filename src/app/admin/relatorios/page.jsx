@@ -29,7 +29,11 @@ export default function Relatorios(){
         {
             Api(`/transactions?initial_date=${dataInicial ? dataInicial : primeiroDia} 00:00:00&final_date=${dataFinal ? dataFinal : ultimoDia} 23:59:59&type=${type}${employee == "" ? "": "&provider=" + employee }`, {
                 method: "GET", token: session.data.token.token})
-                .then(res => res.json()).then(data => {
+                .then(res => {
+                    console.log(res)
+                    res.json()
+                
+                }).then(data => {
                     
                     console.log(data)
                     if(data.status == 200){

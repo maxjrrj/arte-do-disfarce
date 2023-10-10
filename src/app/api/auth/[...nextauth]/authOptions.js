@@ -18,8 +18,8 @@ const authOptions = {
             password: {  label: "password", type: "password" }
           },
           async authorize(credentials, req) {
-  
-            const response = await fetch("https://127.0.0.1:7033/token", {
+
+            const response = await fetch("https://89.116.225.88/api/token", {
                 method: "POST",
                 mode: "cors",
                 headers: {
@@ -66,6 +66,7 @@ const authOptions = {
         },
         
         async session(session){
+          
           const exp = new Date(session.token.user.exp * 1000)
           const now = new Date()
   

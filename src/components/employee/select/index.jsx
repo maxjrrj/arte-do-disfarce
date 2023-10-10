@@ -7,12 +7,18 @@ const EmployeeSelect = (props) => {
 
     const [employees, setEmployees] = useState([{name:"roberson",id:"0000-0000-0000-0000"}])
     const session = useSession()
-    console.log(session)
+    const token = session.data.token
 
     useEffect(()=>{
-        Api("/employees?page=0&rows=10",{token: session.data.token.token})
-            .then(res => res.json())
-            .then(data => setEmployees(data))
+        Api("/employees?page=0&rows=10",{token: token.token, method: "GET"})
+            .then(res => {
+                return res.json()
+            })
+            .then(data => {
+                console.log(data)
+                setEmployees(data)
+                console.log(data)
+            })
     },[])
     
 

@@ -29,7 +29,7 @@ export default function Relatorios(){
     useEffect(()=> {
         try {
             Api(`/transactions?initial_date=2023-08-08 23:59:00&final_date=2023-08-08 23:59:00&type=both&status=pending`, {
-                method: "GET", token})
+                method: "GET", token:token})
                 .then(res => res.json()).then(data => {
                     console.log(data)
                     if(data.status == 200){

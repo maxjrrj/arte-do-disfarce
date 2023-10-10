@@ -1,19 +1,20 @@
 'use client'
 
 const Api = async (path, options = { method: "GET", body: null, token: undefined }) => {  
-
+  
   try {
-    const response = await fetch("https://localhost:7033" + path, {
+    const response = await fetch("https://investidev.com/api" + path, {
       method: options.method,
       body: options.body,
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + options.token,
+        "Authorization": "Bearer " + options.token,
       },
     });
     
     return response;
+    
   } catch (e) {
     console.log(e);
 
