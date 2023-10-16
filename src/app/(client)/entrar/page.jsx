@@ -32,6 +32,7 @@ export default function Entrar() {
       }
 
     } catch(error){
+      console.log("erro aqui")
       console.log(error)
     }
     

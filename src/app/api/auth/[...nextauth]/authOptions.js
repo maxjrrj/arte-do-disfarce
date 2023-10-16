@@ -19,7 +19,7 @@ const authOptions = {
           },
           async authorize(credentials, req) {
 
-            const response = await fetch("https://89.116.225.88/api/token", {
+            const response = await fetch("https://89.116.225.88/rest/token", {
                 method: "POST",
                 mode: "cors",
                 headers: {
