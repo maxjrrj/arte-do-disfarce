@@ -14,7 +14,7 @@ export default function Relatorios(){
     const aproveTransaction = ({id, status}) => {
         let transaction = transactions.find(transaction => transaction.id == id)
         transaction.status = status
-        transaction.provider = transaction.provider.id
+        transaction.provider = transaction.provider?.id
         console.log(token)
         Api("/transactions/" + id, {method: "PUT", body: JSON.stringify(transaction), token: token}).then(res => res?.json()).then(response => {
             console.log(response)
@@ -30,14 +30,15 @@ export default function Relatorios(){
         try {
             Api(`/transactions?initial_date=2023-08-08 23:59:00&final_date=2023-08-08 23:59:00&type=both&status=pending`, {
                 method: "GET", token:token})
-                .then(res => res.json()).then(data => {
-                    console.log(data)
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data.transactions)                    
                     if(data.status == 200){
                         setTransactions(data.transactions)
                     } else if(data.status == 403) {
                         window.alert("Não autorizado")
                     }
-                }).then(res =>  res?.json()).then(r => console.log(r))
+                })
                 
         } catch(e) {
             console.log(e)
@@ -71,7 +72,7 @@ export default function Relatorios(){
                                 return(
                                     <tr key={transaction.id}>
                                         <td className="p-3 w-2/12 text-center">{new Date(transaction.transactionDate).toLocaleDateString("pt-br")}</td>
-                                        <td className="p-3 text-center">{transaction.provider.name}</td>
+                                        <td className="p-3 text-center">{transaction.provider?.name}</td>
                                         <td className="p-3 text-center">
 
                                             <select defaultValue={'DEFAULT'} className="bg-gray-100 appearance-none w-8/12 text-center focus:outline-none">

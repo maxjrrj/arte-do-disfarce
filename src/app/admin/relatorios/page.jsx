@@ -29,11 +29,8 @@ export default function Relatorios(){
         {
             Api(`/transactions?initial_date=${dataInicial ? dataInicial : primeiroDia} 00:00:00&final_date=${dataFinal ? dataFinal : ultimoDia} 23:59:59&type=${type}${employee == "" ? "": "&provider=" + employee }`, {
                 method: "GET", token: session.data.token.token})
-                .then(res => {
-                    console.log(res)
-                    res.json()
-                
-                }).then(data => {
+                .then(res => res.json())
+                .then(data => {
                     
                     console.log(data)
                     if(data.status == 200){
@@ -181,7 +178,7 @@ export default function Relatorios(){
                                 return(
                                     <tr key={transaction.id}>
                                         <td className="p-3 w-2/12 text-center">{new Date(transaction.transactionDate).toLocaleDateString("pt-br")}</td>
-                                        <td className="p-3 text-center">{transaction.provider.name}</td>
+                                        <td className="p-3 text-center">{transaction.provider?.name}</td>
                                         <td className="p-3 text-center">
 
                                             <select defaultValue={'DEFAULT'} className="bg-gray-100 appearance-none w-8/12 text-center focus:outline-none">

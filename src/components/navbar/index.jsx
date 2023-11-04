@@ -13,6 +13,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
 import { useSession, signOut } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 const products = [
   { name: 'Todos os planos', description: 'Planos para você economizar e ficar na régua', href: '#', icon: ChartPieIcon },
@@ -32,6 +33,7 @@ function classNames(...classes) {
 
 export default function NavBar() {
   const session = useSession()
+  const router = useRouter()
   
   
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -39,9 +41,11 @@ export default function NavBar() {
   useEffect(() => {
     setAuthenticated(session.status)
   }, [session.status])
+
   const logout = (e) => {
     e.preventDefault()
-    signOut()
+    signOut({redirect: false})
+
   }
  
 

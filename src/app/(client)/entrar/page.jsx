@@ -19,6 +19,7 @@ export default function Entrar() {
   async function login(e){
     
     e.preventDefault()
+
     try {
       const data = await signIn('credentials', {
         email: email,
@@ -26,9 +27,10 @@ export default function Entrar() {
         redirect: false
       })
       if(data.error){
+        console.log(data)
         setModal(<Modal closeModal={setModal} header={"Erro"} body={"Login ou senha incorretos."} />)
       } else {
-        router.push('/')
+        router.push('/admin/caixa')
       }
 
     } catch(error){

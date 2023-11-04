@@ -15,12 +15,13 @@ export default function AdmLayout({children}) {
   const session = useSession()
   const router = useRouter()
   
+  const isAuthorizaded = (role) => ['Admin', 'Manager', 'Employee'].some(allowed => allowed == role) 
 
   useEffect(() => {
    if(session.status == 'unauthenticated'){
-      router.push('/entrar')
-    } else if(session.status == 'authenticated' && session.data.token.user.role == 'Client'){
-      router.push('/entrar')
+      router.push('https://investidev.com/entrar')
+    } else if(session.status == 'authenticated' && !isAuthorizaded(session.data.token.user.role)){
+      router.push('https://investidev.com/')
     }
   },[session])
   

@@ -2,14 +2,14 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react';
 import { useSession, signOut } from 'next-auth/react'
 
 export default function Dashboard({children}) {
-
-  const logout = () => {
-    signOut()
+  const router =  useRouter()
+  const logout = (e) => {
+    signOut({redirect: false})
   }
 
   const userNavigation = [
@@ -44,7 +44,7 @@ export default function Dashboard({children}) {
   },[session])
     
   return (
-      <div className="min-h-full">
+      <div className="min-h-full h-screen">
         
         <Disclosure as="nav" className="bg-gray-800">
           {({ open }) => (
@@ -122,7 +122,7 @@ export default function Dashboard({children}) {
                                 )}
                               </Menu.Item>
                             ))}
-                            <button className='block px-4 py-2 text-sm text-gray-700 w-full text-left hover:bg-gray-100' onClick={() => logout()}>Sair</button>
+                            <button className='block px-4 py-2 text-sm text-gray-700 w-full text-left hover:bg-gray-100' onClick={(e) => logout(e)}>Sairr</button>
                           </Menu.Items>
                         </Transition>
                       </Menu>
@@ -191,7 +191,7 @@ export default function Dashboard({children}) {
                       
                     ))}
                     <button className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-                            onClick={() => logout()}>Sair</button>
+                            onClick={() => logout()}>Sairr</button>
                   </div>
                 </div>
               </Disclosure.Panel>
