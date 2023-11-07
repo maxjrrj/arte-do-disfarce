@@ -54,14 +54,11 @@ export default function Caixa(){
             token: session.data.token.token
 
         }).then(res => {
-            
-            console.log(res)
-            if(res.status ==  200){
-                setModal(<Modal closeModal={setModal} header={"Registro"} body={"O registro foi efetuado com sucesso!"} />)
-            } else {
-                setModal(<Modal closeModal={setModal} header={"Registro"} body={"Erro ao registrar transação!"} />)
-            }
-
+                if(res.status ==  200){
+                    setModal(<Modal closeModal={setModal} header={"Registro"} body={"O registro foi efetuado com sucesso!"} />)
+                } else {
+                    setModal(<Modal closeModal={setModal} header={"Registro"} body={"Erro ao registrar transação!"} />)
+                }
             } 
         )
         

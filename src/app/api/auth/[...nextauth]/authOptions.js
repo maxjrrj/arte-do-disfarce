@@ -69,7 +69,6 @@ const authOptions = {
         },
         
         async session(session){
-          console.log(session)
           const exp = new Date(session.token.user.exp * 1000)
           const now = new Date()
   

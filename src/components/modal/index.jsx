@@ -54,7 +54,7 @@ const Modal = ({ closeModal, header, body }) => {
               </p>
             </div>
             {/*} Modal footer */}
-            <div className="flex items-center justify-end p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+            <div className="flex items-center justify-end px-6 py-2 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
               <button
                 data-modal-hide="defaultModal"
                 type="button"

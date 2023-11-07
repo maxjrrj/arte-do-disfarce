@@ -11,15 +11,9 @@ export default function Entrar() {
   const [password, setPassword] = useState("")
   const [modal, setModal] = useState("")
   
-  const showSession = () => {
-    console.log(session)
-  }
-
-  
   async function login(e){
-    
-    e.preventDefault()
 
+    e.preventDefault()
     try {
       const data = await signIn('credentials', {
         email: email,
@@ -37,7 +31,6 @@ export default function Entrar() {
       console.log("erro aqui")
       console.log(error)
     }
-    
   
   }
   
@@ -54,7 +47,6 @@ export default function Entrar() {
               Acesse sua conta
             </h2>
           </div>
-          <button onClick={() => showSession()}>showSession</button>
   
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
             <form className="space-y-6" method="POST">

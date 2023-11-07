@@ -122,7 +122,7 @@ export default function Dashboard({children}) {
                                 )}
                               </Menu.Item>
                             ))}
-                            <button className='block px-4 py-2 text-sm text-gray-700 w-full text-left hover:bg-gray-100' onClick={(e) => logout(e)}>Sairr</button>
+                            <button className='block px-4 py-2 text-sm text-gray-700 w-full text-left hover:bg-gray-100' onClick={(e) => logout(e)}>Sair</button>
                           </Menu.Items>
                         </Transition>
                       </Menu>
@@ -157,8 +157,7 @@ export default function Dashboard({children}) {
                     >
                       {item.name}
                     </Disclosure.Button>
-                  ))}
-                  hello
+                  ))}*
                 </div>
                 <div className="border-t border-gray-700 pb-3 pt-4">
                   <div className="flex items-center px-5">
