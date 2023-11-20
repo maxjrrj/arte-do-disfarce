@@ -56,6 +56,7 @@ export default function Caixa(){
         }).then(res => {
                 if(res.status ==  200){
                     setModal(<Modal closeModal={setModal} header={"Registro"} body={"O registro foi efetuado com sucesso!"} />)
+                    
                 } else {
                     setModal(<Modal closeModal={setModal} header={"Registro"} body={"Erro ao registrar transação!"} />)
                 }

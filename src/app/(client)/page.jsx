@@ -16,19 +16,27 @@ export default function Home() {
 
           <div className="lg:w-5/12 sm:w-full sm:my-2 sm:p-4 bg-slate-100 h-80 rounded-md lg:m-auto">
 
-            <h4 className="text-center sm:mb-6">Por que assinar?</h4>
+            <h1 className="text-center sm:mb-6 text-xl"><b>Centenas de alunos cerificados</b></h1>
 
             <p className="sm:mb-6">Com nossos planos de assinatura, você pode manter a régua atualizada com um preço mais baixo.</p>
             <p>Além de contar com serviços mais baratos, você terá descontos exclusivos em todos os produtos</p>
 
             <p className="sm:text-center sm:mt-4">
-              <Link href="/planos" className="rounded-full bg-red-400 sm:p-2">Confira nossos planos</Link>
+              <Link href="#" className="rounded-full bg-red-400 sm:p-2">Confira nossos planos</Link>
             </p>
           </div>
 
 
           <div className="lg:w-5/12 sm:w-full sm:my-2 sm:p-4 bg-slate-100 h-80 rounded-md lg:m-auto">
-            Assinatura Anual
+
+            <h1 className="text-center sm:mb-6 text-xl"><b>Confira nossos planos</b></h1>
+
+            <p className="sm:mb-6">Com nossos planos de assinatura, você pode manter a régua atualizada com um preço mais baixo.</p>
+            <p>Além de contar com serviços mais baratos, você terá descontos exclusivos em todos os produtos</p>
+
+            <p className="sm:text-center sm:mt-4">
+              <Link href="#" className="rounded-full bg-red-400 sm:p-2">Confira nossos planos</Link>
+            </p>
           </div>
 
 

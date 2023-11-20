@@ -36,11 +36,13 @@ const UpdateServiceModal = (props) => {
         
         <div style={{backgroundColor: "#00000085"}} className="h-full w-full  top-0 left-0 absolute ml-auto flex flex-col justify-center items-center">
 
-            <div className="bg-gray-800 lg:w-2/3 lg:h-12 rounded-t-lg border-2 border-black border-b-0 text-white font-bold text-center sm:h-1/12 sm:w-10/12 sm:p-2">
+            <div className="bg-gray-800 lg:w-2/3 lg:h-12 rounded-t-lg text-white font-bold text-center sm:h-1/12 sm:w-10/12 sm:p-2">
                 Editar Serviço
             </div>
 
-            <div className="bg-white lg:h-48 lg:w-2/3 sm:h-2/3 sm:w-10/12 lg:flex lg:justify-between sm:flex-col sm:p-2 pt-6">
+            <div  className="bg-white pt-6
+                            sm:w-10/12  sm:flex-col sm:p-2 sm:h-1/3 sm:rounded-b-lg sm:min-h-330 lg:min-h-100
+                            lg:h-48 lg:w-2/3 lg:flex lg:justify-between">
 
                 <div className="lg:flex lg:flex-row lg:justify-around">
                     <div className="lg:w-3/12 sm:w-full">

@@ -34,12 +34,11 @@ export default function Dashboard({children}) {
   const session = useSession()
 
   useEffect(()=>{
-    
+    console.log(session)
     setUser({
       name: session.data.token.user.nameid,
-      email: 'user@gmail.com',
-      imageUrl:
-        'https://avatars.githubusercontent.com/u/63122403?v=4',
+      email: session.data.token.user.email,
+      imageUrl: session.data.token.user.ProfileImageUrl,
     })
   },[session])
     
@@ -157,7 +156,7 @@ export default function Dashboard({children}) {
                     >
                       {item.name}
                     </Disclosure.Button>
-                  ))}*
+                  ))}
                 </div>
                 <div className="border-t border-gray-700 pb-3 pt-4">
                   <div className="flex items-center px-5">
@@ -190,7 +189,7 @@ export default function Dashboard({children}) {
                       
                     ))}
                     <button className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-                            onClick={() => logout()}>Sairr</button>
+                            onClick={() => logout()}>Sair</button>
                   </div>
                 </div>
               </Disclosure.Panel>

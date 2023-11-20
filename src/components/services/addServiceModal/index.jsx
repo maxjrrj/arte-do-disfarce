@@ -19,17 +19,21 @@ const AddServiceModal = (props) => {
 
     return (
         
-        <div style={{backgroundColor: "#00000085"}} className="h-full w-full  top-0 left-0 absolute ml-auto flex flex-col justify-center items-center">
+        <div style={{backgroundColor: "#00000085"}} className="h-full  w-full top-0 left-0 absolute ml-auto flex flex-col justify-center items-center">
 
-            <div className="bg-gray-800 lg:w-2/3 lg:h-12 rounded-t-lg border-2 border-black border-b-0 text-white text-center">
+            <div className="bg-gray-800 rounded-t-lg border-b-0 text-white text-center
+                            sm:h-2/10  sm:w-10/12 sm:text-xl p-1
+                            lg:w-2/3 lg:h-12">
                 Editar Serviço
             </div>
 
-            <div className="bg-white lg:h-48 lg:w-2/3 sm:h-2/3 sm:w-10/12 lg:flex lg:justify-between sm:flex-col sm:p-2 pt-6">
+            <div className="bg-white pt-6
+                            sm:h-1/3 sm:w-10/12  sm:flex-col sm:p-2 sm:rounded-b-lg sm:min-h-330 lg:min-h-100
+                            lg:h-48 lg:w-2/3 lg:flex lg:justify-between">
 
                 <div className="lg:flex lg:flex-row lg:justify-around">
                     <div className="lg:w-3/12 sm:w-full">
-                        <label htmlFor="valor" className="text-lg font-lg leading-6  text-gray-900">
+                        <label htmlFor="valor" className="text-lg leading-6  text-gray-900">
                             Nome
                         </label>
                         <div className="mt-2">
@@ -81,9 +85,9 @@ const AddServiceModal = (props) => {
                     </div>  
                 </div>
                 
-                <div className="lg:w-full sm:w-6/12 flex justify-end">
-                    <button className="bg-green-200 w-1/6 h-12 mr-3 rounded-lg lg:hover:bg-green-500 lg:hover:text-white active:text-gray mt-auto" onClick={() => addService()}><b>Criar</b></button>
-                    <button className="bg-gray-500 w-1/6 h-12 mr-3 rounded-lg lg:hover:bg-gray-800 lg:hover:text-white active:text-gray mt-auto" onClick={() => props.close()}><b>Fechar</b></button>
+                <div className="lg:w-full sm:w-full sm:mt-5 flex sm:justify-end">
+                    <button className="lg:bg-green-200 lg:w-1/6 lg:h-12 sm:w-1/2 sm:h-12 mr-3 rounded-lg sm:bg-green-500 sm:text-white lg:hover:bg-green-500 lg:hover:text-white active:text-gray mt-auto" onClick={() => addService()}><b>Criar</b></button>
+                    <button className="lg:bg-gray-500 lg:w-1/6 lg:h-12 sm:w-1/2 sm:h-12 mr-3 rounded-lg sm:bg-gray-800 sm:text-white lg:hover:bg-gray-800 lg:hover:text-white active:text-gray mt-auto" onClick={() => props.close()}><b>Fechar</b></button>
                 </div>
             </div>
         </div>

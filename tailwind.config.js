@@ -6,6 +6,18 @@ module.exports = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    minHeight: {
+      '100': '100px',
+      '200': '200px',
+      '300': '300px',
+      '330': '330px',
+      '400': '400px',
+      '500': '500px',
+      '600': '600px',
+      '700': '700px',
+      '800': '800px',
+      '900': '900px',
+    },
     extend: {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -14,7 +26,7 @@ module.exports = {
       },
     },
     screens: {
-      sm: '360px',
+      sm: '300px',
       md: '768px',
       lg: '976px',
       xl: '1440px',
