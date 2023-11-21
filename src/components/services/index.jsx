@@ -12,13 +12,12 @@ export default function MultiServicesSelect(props) {
   const token = session?.data?.token
   
   const [options, setOptions] = useState([
-    { value: '1', label: 'Teste' }
+    { value: '1', label: 'carregando...' }
   ])
 
   useEffect(()=>{
     Api("/services",{token: token.token}).then(res => res.json())
       .then(data =>{
-        console.log(data)
         let tempOptions = []
         data.forEach(service => tempOptions.push({value: service.id, label: service.name, price: service.price}));
         setOptions(tempOptions)

@@ -31,15 +31,12 @@ export default function Relatorios(){
                 method: "GET", token: session.data.token.token})
                 .then(res => res.json())
                 .then(data => {
-                    
-                    console.log(data)
                     if(data.status == 200){
                         setTransactions(data.transactions)
                     } else if(data.status == 403) {
                         window.alert("Não autorizado")
                     }
-                })
-                
+                })     
         } 
         catch(e)
         {
@@ -77,12 +74,8 @@ export default function Relatorios(){
         transactions.forEach(t => {
             t.type == 'cashInflow' ? count += t.value : count -= t.value 
         })
-        console.log(count)
         setTotal(count)
     }, [transactions, entrada, saida])
-
-    
-
 
     return(
         <div>

@@ -34,7 +34,6 @@ export default function Dashboard({children}) {
   const session = useSession()
 
   useEffect(()=>{
-    console.log(session)
     setUser({
       name: session.data.token.user.nameid,
       email: session.data.token.user.email,
