@@ -34,7 +34,7 @@ const authOptions = {
             })
             const data = await response.json()
 
-            const user = {token: data.token, user: jwt_decode(data.token)}
+            const user = {token: data.token, user: jwt_decode(data.token), }
             
             
             if (user) {
@@ -60,7 +60,7 @@ const authOptions = {
       callbacks: {
   
         async jwt({token, user, session}){
-  
+          console.log(user)
           if(user){
             return {...user}
           } else {

@@ -38,7 +38,7 @@ export default function Dashboard({children}) {
     setUser({
       name: session.data.token.user.nameid,
       email: session.data.token.user.email,
-      imageUrl: session.data.token.user.ProfileImageUrl,
+      imageUrl: session.data.token.user.profileImageUrl,
     })
   },[session])
     
