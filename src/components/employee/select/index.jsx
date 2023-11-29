@@ -15,9 +15,7 @@ const EmployeeSelect = (props) => {
                 return res.json()
             })
             .then(data => {
-                console.log(data)
                 setEmployees(data)
-                console.log(data)
             })
     },[])
     

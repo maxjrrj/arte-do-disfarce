@@ -50,12 +50,13 @@ export default function NavBar() {
  
 
   return (
-    <div className="bg-white">
+    <div className="" style={{background: 'linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8547794117647058) 10%, rgba(0,0,0,0.5970763305322129) 30%, rgba(0,0,0,0.3981967787114846) 50%, rgba(0,0,0,0.20211834733893552) 70%, rgba(0,0,0,0.10127801120448177) 90%, rgba(0,0,0,0) 100%)', position: 'fixed', width: '100vw', top: 0}}>
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
-          <Link href="/" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your Company</span>
-            <img  className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
+          <Link href="/" className="-m-1.5 p-1.5 flex flex-row">
+            <span className="sr-only">Arte do Disfarce</span>
+            <img  className="h-8 w-auto rounded-xl" src="/images/artedodisfarcelogo.jpg" alt="" />
+            <div className="text-white ml-3 text-lg"><strong>Arte do Disfarce</strong></div>
           </Link>
         </div>
         <div className="flex lg:hidden">
@@ -70,7 +71,7 @@ export default function NavBar() {
         </div>
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
           <Popover className="relative">
-            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
+            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900 text-white">
               Assinaturas
               <ChevronDownIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
             </Popover.Button>
@@ -84,7 +85,7 @@ export default function NavBar() {
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
             >
-              <Popover.Panel className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
+              <Popover.Panel className="absolute left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
                 <div className="p-4">
                   {products.map((item) => (
                     <div
@@ -104,7 +105,7 @@ export default function NavBar() {
                     </div>
                   ))}
                 </div>
-                <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
+                <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50 ">
                   {callsToAction.map((item) => (
                     <Link
                       key={item.name}
@@ -120,25 +121,25 @@ export default function NavBar() {
             </Transition>
           </Popover>
 
-          <Link href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          <Link href="#" className="text-sm font-semibold leading-6 text-gray-900 text-white">
             Serviços
           </Link>
-          <Link href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          <Link href="#" className="text-sm font-semibold leading-6 text-gray-900 text-white">
             Sobre Nós
           </Link>
-          <Link href="/contato" className="text-sm font-semibold leading-6 text-gray-900">
+          <Link href="/contato" className="text-sm font-semibold leading-6 text-gray-900 text-white">
             Contato
           </Link>
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           
           {authenticated == "unauthenticated" ? (
-            <Link href="/entrar" className="text-sm font-semibold leading-6 text-gray-900">
+            <Link href="/entrar" className="text-sm font-semibold leading-6 text-gray-900 text-white">
               <span>Entrar</span>
               <span aria-hidden="true">&rarr;</span>
             </Link>
           ):(
-            <Link onClick={(e)=> logout(e)} href="#" className="text-sm font-semibold leading-6 text-gray-900">
+            <Link onClick={(e)=> logout(e)} href="#" className="text-sm font-semibold leading-6 text-gray-900 text-white">
               <span>Sair</span>
               <span aria-hidden="true">&rarr;</span>
             </Link>
@@ -216,6 +217,7 @@ export default function NavBar() {
               </div>
               <div className="py-6">
                 <Link
+                  onClick={()=>setMobileMenuOpen(false)}
                   href="/entrar"
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >

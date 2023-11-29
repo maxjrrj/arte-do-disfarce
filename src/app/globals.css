@@ -26,3 +26,18 @@ body {
     rgb(var(--background-start-rgb));
 }
 */
+*::-webkit-scrollbar {
+  width: 4px;
+  height: 3px; /* A altura só é vista quando a rolagem é horizontal */
+  background-color: black;
+
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: gray;
+  
+}

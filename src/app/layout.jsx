@@ -10,6 +10,7 @@ export default function RootLayout({children}) {
 
   return (
     <html lang="pt">
+    <link rel="icon" type="image/x-icon" href="/images/artedodisfarcelogo.jpg"></link>
       <Provider>
         <body>
           {children}
